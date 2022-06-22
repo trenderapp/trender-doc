@@ -12,7 +12,7 @@ sidebar_position: 0
 
 ### Authentification
 
-For all requests you made when you need to be connected, you need to send in header the following identification :
+For all requests you made you need to be connected, send in header the following identification :
 
 ```json
 "trendertokenapi": "you account token"
@@ -20,7 +20,7 @@ For all requests you made when you need to be connected, you need to send in hea
 
 ### Rate limit
 
-To prevent for spam, we limited the number of request by 900 for 15 minutes but we can change it at any time.
+To prevent for spam, we limited the number of request by 900 for 15 minutes but we can change it at any time. It correspond to 1 by second.
 
 
 ### Error messages
@@ -92,7 +92,7 @@ All errors messages are sending with this structure :
 
 ## Snowflakes
 
-Trender use the same ID's system as Discord and Twitter, called [snowflake](https|//discord.com/developers/docs/reference#snowflakes)
+Trender use the same ID's system as Discord and Twitter, called snowflakes ![Snowflakes image](/img/snowflakes.jpg)
 
 ## Message Formatting
 
@@ -105,6 +105,7 @@ Trender use a sort of markdown base to render message, but we also added some fu
 | Code| \`\`\`text\`\`\` | For code text formating ```/(\`\`\`.+\n[\s\S]*?\n\`\`\`)/gi```
 | Mention| <@user_id> | Tag a user `/(<@.+>)/gi`
 |Hashtags|<#text>|Use hashtag `/(<#.+>)/gi`|
+
 ## CDN
 
 ### Files base url
@@ -225,7 +226,7 @@ These characters are not allowed and will be replace by an underscore `_` :
 |1 << 4|EARLY_SUPPORTER|Early supporter account|
 |1 << 5|CERTIFIED_MODERATOR|Official moderator|
 
-  
+![Bitfield et flags (bitwise operations)](/img/bitwise.jpg)
 
 ## Premium Types
 
