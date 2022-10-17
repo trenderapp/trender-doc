@@ -1,0 +1,2250 @@
+{
+	"info": {
+		"_postman_id": "500503b3-9005-4fea-abdf-ee6358123ef4",
+		"name": "Trender Documentation",
+		"description": "Welcome to the Trender documentation, everything you need to build your own apps or learn more about the project is here.\n\n## How To Contribute\n\nJust write to [contact@trenderapp.com](mailto:contact@trenderapp.com), official [Trender account](https://trenderapp.com/trender) or join the [Discord server](https://discord.gg/eGpjpW3UgU)\n\n### Bugs\n\nIf you find bugs, vulnerabilities or other think, open and issue [here](https://forms.trenderapp.com)\n\n# API References\n\n## HTTP API\n\n### Base API URL\n\n- You have two different ways to work with the REST API :\n    \n\n| Version | URL |\n| --- | --- |\n| Stable Version | [https://api.trenderapp.com](https://api.trenderapp.com) |\n| Beta Version | [https://api.beta.trenderapp.com](https://api.trenderapp.com) |\n\n### Websocket URL\n\n| Version | URL |\n| --- | --- |\n| Stable Version | wss://api.trenderapp.com |\n| Beta Version | wss://api.beta.trenderapp.com |\n\n### Authentification\n\nFor all requests you made you need to be connected, send in header the following identification :\n\n``` json\n\"trendertokenapi\": \"you account token\"\n\n```\n\n### Rate limit\n\nTo prevent for spam, we limited the number of request by 900 for 15 minutes but we can change it at any time. It correspond to 1 by second.\n\n### Error messages\n\nAll errors messages are sending with this structure :\n\n``` json\n{\n    \"error\": {\n        \"message\": \"Error description\",\n        \"code\": 0\n    }\n}\n\n```\n\n**JSON Response Codes**\n\n| CODE | DESCRIPTION |\n| --- | --- |\n| 200 | success |\n| 404 | This root doesn't exit |\n| 505 | Upload failed |\n| 0 | Invalid parameter |\n| 1 | Invalid email or password |\n| 2 | Invalid token provided |\n| 3 | Invalid account permission |\n| 4 | Invalid birthday |\n| 5 | Invalid captcha |\n| 6 | Invalid file extension |\n| 7 | Invalid field name |\n| 8 | Invalid field length |\n| 9 | Invalid request ID or already used |\n| 10 | Invalid field size |\n| 11 | Invalid query name |\n| 1000 | Unknown post |\n| 1001 | Unknown user |\n| 1002 | Unknown invite |\n| 1003 | Unknown message |\n| 1004 | Unknown follow |\n| 1005 | Unknown guild |\n| 1006 | Unknown gift code |\n| 1007 | Unknown verification code |\n| 1008 | Unknown email |\n| 1009 | Unknown attached post |\n| 2000 | Too many requests, please try again after 15 minutes |\n| 2001 | Maximum number of characters has been reached in a post (1000) |\n| 2002 | Maximum number of characters has been reached in a comment (1000) |\n| 2003 | Maximum number of characters has been reached in a description (120) |\n| 3000 | User nickname already taken |\n| 3001 | User email already taken |\n| 3002 | User banned |\n| 3003 | Access denied the user blocked you |\n| 3004 | Access denied this account is private |\n| 3005 | This account is not verified yet |\n| 4000 | User already following |\n| 4001 | Follow already accepted |\n| 5000 | This user is already blocked |\n| 5001 | This user is not blocked |\n| 6000 | This user has already been report by you |\n| 7000 | Your account has been banned |\n| 8000 | Post not found |\n| 9000 | Too many parts |\n| 9001 | File too large |\n| 9002 | Too many files |\n| 9003 | Field name too long |\n| 9004 | Field value too long |\n| 9005 | Too many fields |\n| 9006 | Unexpected field |\n| 10000 | Field name missing |\n| 10001 | Missing query field |\n\n**HTTP Response Codes**\n\n| CODE | DESCRIPTION |\n| --- | --- |\n| 100 | CONTINUE |\n| 101 | SWITCHING_PROTOCOLS |\n| 102 | PROCESSING |\n| 200 | OK |\n| 201 | CREATED |\n| 202 | ACCEPTED |\n| 203 | NON_AUTHORITATIVE_INFORMATION |\n| 204 | NO_CONTENT |\n| 205 | RESET_CONTENT |\n| 206 | PARTIAL_CONTENT |\n| 300 | AMBIGUOUS |\n| 301 | MOVED_PERMANENTLY |\n| 302 | FOUND |\n| 303 | SEE_OTHER |\n| 304 | NOT_MODIFIED |\n| 307 | TEMPORARY_REDIRECT |\n| 308 | PERMANENT_REDIRECT |\n| 400 | BAD_REQUEST |\n| 401 | UNAUTHORIZED |\n| 402 | PAYMENT_REQUIRED |\n| 403 | FORBIDDEN |\n| 404 | NOT_FOUND |\n| 405 | METHOD_NOT_ALLOWED |\n| 406 | NOT_ACCEPTABLE |\n| 407 | PROXY_AUTHENTICATION_REQUIRED |\n| 408 | REQUEST_TIMEOUT |\n| 409 | CONFLICT |\n| 410 | GONE |\n| 411 | LENGTH_REQUIRED |\n| 412 | PRECONDITION_FAILED |\n| 413 | PAYLOAD_TOO_LARGE |\n| 414 | URI_TOO_LONG |\n| 415 | UNSUPPORTED_MEDIA_TYPE |\n| 416 | REQUESTED_RANGE_NOT_SATISFIABLE |\n| 417 | EXPECTATION_FAILED |\n| 418 | I_AM_A_TEAPOT |\n| 422 | UNPROCESSABLE_ENTITY |\n| 424 | FAILED_DEPENDENCY |\n| 429 | TOO_MANY_REQUESTS |\n| 500 | INTERNAL_SERVER_ERROR |\n| 501 | NOT_IMPLEMENTED |\n| 502 | BAD_GATEWAY |\n| 503 | SERVICE_UNAVAILABLE |\n| 504 | GATEWAY_TIMEOUT |\n| 505 | HTTP_VERSION_NOT_SUPPORTED |\n\n## Snowflakes\n\nTrender use the same ID's system as Discord and Twitter, called snowflakes\n\n## Message Formatting\n\nTrender use a sort of markdown base to render message, but we also added some functionnalies to improve user experience.\n\n| TYPE | STRUCTURE | DESCRIPTION |\n| --- | --- | --- |\n| Bold | **text** | Bold the text `/(\\\\\\*\\\\\\*.+\\\\\\*\\\\\\*)/gi` |\n| Underline | **text** | Underline the text `/(\\_\\_.+\\_\\_)/gi` |\n| Code | \\`\\`\\`text\\`\\`\\` | For code text formating ``/(\\`\\`\\`.+\\n[\\s\\S]\\\\*?\\n\\`\\`\\`)/gi`` |\n| Mention | <@user_id> | Tag a user `/(<@.+>)/gi` |\n| Hashtags | <#text> | Use hashtag `/(<#.+>)/gi` |\n\n## CDN\n\n### Files base url\n\n```\nhttps://cdn.trenderapp.com/\n\n```\n\nOr if you use beta version\n\n```\nhttps://cdn2.trenderapp.com/\n\n```\n\n| TYPE | PATH | SUPPORT |\n| --- | --- | --- |\n| Profile Avatars | profile_avatars/**user_id**/**image.png** | png, jpeg, jpg |\n| Profile Banners | profile_banners/**user_id**/**image.png** | png, jpeg, jpg |\n| Posts Attachments | posts/**user_id**/**post_id**/**file** | png, jpeg, jpg, webp, gif, mp4, mov, webm, mp3, wav |\n| Messages Attachments | messages/**user_id**/**message_id**/**file** | png, jpeg, jpg, webp, gif, mp4, mov, webm, mp3, wav |\n\n### Uploading files\n\nAll files as to be sent at :\n\n```\n{{apiurl}}/upload?type=\n\n```\n\nWith a formData body with one or all your files the key of the files must be the same as the type. The total size of your file depend of the type of your account.\n\nWhere the type can be :\n\n| TYPE | DESCRIPTION | Max Files |\n| --- | --- | --- |\n| banner | Change your banner account | 1 |\n| avatar | Change your avatar account | 1 |\n| posts | Upload file to create a post | 8 for images but 1 for video or audio |\n\nAnd you will receive a response with the error of the upload or a `200 SUCCESS` with this informations :\n\n``` json\n{\n    \"request_id\": \"290503551044681728\",\n    \"type\": 1,\n    \"attachments\": [\n        {\n            \"id\": \"290503551090819073\",\n            \"name\": \"o4KCC_2.gif\",\n            \"size\": 9452,\n            \"mimetype\": \"image/gif\",\n            \"created_at\": \"2022-03-12T15:17:23.876Z\"\n        },\n        {\n            \"id\": \"290503551095013378\",\n            \"name\": \"ccJ4i_512.png\",\n            \"size\": 22837,\n            \"mimetype\": \"image/png\",\n            \"created_at\": \"2022-03-12T15:17:23.876Z\"\n        },\n        {\n            \"id\": \"290503551095013379\",\n            \"name\": \"2P61f_log.png\",\n            \"size\": 38465,\n            \"mimetype\": \"image/png\",\n            \"created_at\": \"2022-03-12T15:17:23.876Z\"\n        }\n    ]\n}\n\n```\n\nThe type correspond to the type of files sent :\n\n| NUMBER | FILE TYPE |\n| --- | --- |\n| 0 | NONE |\n| 1 | IMAGE |\n| 2 | VIDEO |\n| 3 | MUSIC |\n| 4 | OTHER |\n\nTo use the file send all the request you receive into your request.  \nThe files will automaticly deleted after 1 hour if you didn't use it.\n\n## Locales\n\n| LOCALE | LANGUAGE NAME |\n| --- | --- |\n| fr | French |\n| en | English |\n\n# Account's informations\n\nTrender have a strict structure and rules for the account to help us and developpers to work better with Trender functionalities.\n\n## Username, nickname and description\n\nUsername and description have no restrictions except the length :\n\n| FIELD | ACCOUNT TYPE | LENGTH |\n| --- | --- | --- |\n| username | All | 3 - 30 |\n| nickname | All | 3 - 30 |\n| description | normal | 512 |\n| description | premium | 1024 |\n\nNicknames cannot contain special characters with a maximum length of 30.\n\nThese characters are not allowed and will be replace by an underscore `_` :\n\n- `[` `!` `@` `#` `$` `%` `^` `&` `\\\\*` `(` `)` `+` `-` `=` `\\` `{` `}` `;` `'` `:` `\"` `/` `|` `,` `.` `<` `>` `?` `]`\n    \n\n## Account structure\n\n| FIELD | TYPE | DESCRIPTION |\n| --- | --- | --- |\n| user_id | snowflake | unique ID of the account |\n| email | string | the user's email |\n| username | string | displayed name of the account |\n| nickname | string | unique name of the account |\n| description? | string | description of the account |\n| avatar | string | the user's avatar |\n| link? | string | the user's gived link |\n| banner? | string | the user's banner |\n| accent_color | string | the user's account color |\n| locale | string | the user's chosen language |\n| verified | boolean | verified user email |\n| certified | boolean | certified account |\n| flags | integer | the user's flags |\n| is_private | boolean | private account |\n| allow_mp | boolean | account accept public private messages |\n| theme | string | theme of the account |\n| premium_type | integer | account subscription type |\n\n### Exemple account structure\n\n``` json\n{\n    \"user_id\": \"227139578069385220\",\n    \"email\": \"contact@trenderapp.com\",\n    \"username\": \"Trender\",\n    \"nickname\": \"trender\",\n    \"description\": \"Welcome to Trender\",\n    \"avatar\": \"mYNwAwEzsoZVZXM1sF4K_trender_255.png\",\n    \"banner\": \"9NpgkVUFyLUm3nAZ8xFd_login_background.jpg\",\n    \"accent_color\": \"#14141b\",\n    \"locale\": \"fr\",\n    \"verified\": true,\n    \"certified\": true,\n    \"flags\": 20,\n    \"is_private\": false,\n    \"allow_mp\": true,\n    \"theme\": \"blue\",\n    \"premium_type\": 3,\n}\n\n```\n\n## Account flags\n\n| VALUE | NAME | DESCRIPTION |\n| --- | --- | --- |\n| 0 | None | None |\n| 1 << 0 | TRENDER_EMPLOYEE | Trender employee |\n| 1 << 1 | TRENDER_PARTNER | Trender partner |\n| 1 << 2 | VERIFIED_USER | Verified email |\n| 1 << 3 | PREMIUM_USER | Premium account |\n| 1 << 4 | EARLY_SUPPORTER | Early supporter account |\n| 1 << 5 | CERTIFIED_MODERATOR | Official moderator |\n\n<img src=\"/img/bitwise.jpg\">\n\n## Premium Types\n\n| VALUE | DESCRIPTION |\n| --- | --- |\n| 0 | None |\n| 1 | Normal |\n| 2 | Shared with partners project |\n| 3 | All advantages |",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12968105"
+	},
+	"item": [
+		{
+			"name": "Administration",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@trenderapp.com\",\r\n    \"password\": \"MTY0MjcxMTg2OTkyMg\",\r\n    \"device_name\": \"PostMan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/login",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"email@exemple.com\",\r\n    \"username\": \"Full Username\",\r\n    \"birthday\": \"18/01/1997\",\r\n    \"password\": \"superpassword\",\r\n    \"code\": \"captcha code\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/register",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "- In function of you account type, you can create a new user or not"
+					},
+					"response": [
+						{
+							"name": "Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"email@example.com\",\r\n    \"username\": \"my super account\",\r\n    \"birthday\": \"10-12-1900\",\r\n    \"password\": \"secretpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/register",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "900"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "898"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "877"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-cDPzfJatKmjjjqybajBHb3uMf04\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 01 Jan 2022 10:53:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"message\": \"Invalid birthday\",\n        \"code\": 4\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/users",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get IP",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ip-api.com/json/157.161.155.133?_=1640773738742",
+							"protocol": "http",
+							"host": [
+								"ip-api",
+								"com"
+							],
+							"path": [
+								"json",
+								"157.161.155.133"
+							],
+							"query": [
+								{
+									"key": "_",
+									"value": "1640773738742"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/status",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/updatemany",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"updatemany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"tutotout371@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/sendmail",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"sendmail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Me",
+			"item": [
+				{
+					"name": "Upload",
+					"item": [
+						{
+							"name": "Banner",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "banner",
+											"type": "file",
+											"src": "/D:/Files/Images/chevre-hopitale.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/upload?type=banner",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"upload"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "banner"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "posts",
+													"type": "file",
+													"src": [
+														"/D:/Files/Images/logo/2.gif",
+														"/D:/Files/Images/logo/512.png",
+														"/D:/Files/Images/logo/log.png"
+													]
+												}
+											]
+										},
+										"url": {
+											"raw": "{{apibaseurl}}/upload?type=posts",
+											"host": [
+												"{{apibaseurl}}"
+											],
+											"path": [
+												"upload"
+											],
+											"query": [
+												{
+													"key": "type",
+													"value": "posts"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "RateLimit-Limit",
+											"value": "900"
+										},
+										{
+											"key": "RateLimit-Remaining",
+											"value": "899"
+										},
+										{
+											"key": "RateLimit-Reset",
+											"value": "898"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "447"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1bf-i7I4LG+Iwpu+HNWuDYsryGswBvQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Mar 2022 15:17:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"request_id\": \"290503551044681728\",\n        \"type\": 1,\n        \"attachments\": [\n            {\n                \"id\": \"290503551090819073\",\n                \"name\": \"o4KCC_2.gif\",\n                \"size\": 9452,\n                \"mimetype\": \"image/gif\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013378\",\n                \"name\": \"ccJ4i_512.png\",\n                \"size\": 22837,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013379\",\n                \"name\": \"2P61f_log.png\",\n                \"size\": 38465,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Avatar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/D:/Files/Images/chevre-hopitale.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/upload?type=avatar",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"upload"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "avatar"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "posts",
+													"type": "file",
+													"src": [
+														"/D:/Files/Images/logo/2.gif",
+														"/D:/Files/Images/logo/512.png",
+														"/D:/Files/Images/logo/log.png"
+													]
+												}
+											]
+										},
+										"url": {
+											"raw": "{{apibaseurl}}/upload?type=posts",
+											"host": [
+												"{{apibaseurl}}"
+											],
+											"path": [
+												"upload"
+											],
+											"query": [
+												{
+													"key": "type",
+													"value": "posts"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "RateLimit-Limit",
+											"value": "900"
+										},
+										{
+											"key": "RateLimit-Remaining",
+											"value": "899"
+										},
+										{
+											"key": "RateLimit-Reset",
+											"value": "898"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "447"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1bf-i7I4LG+Iwpu+HNWuDYsryGswBvQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Mar 2022 15:17:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"request_id\": \"290503551044681728\",\n        \"type\": 1,\n        \"attachments\": [\n            {\n                \"id\": \"290503551090819073\",\n                \"name\": \"o4KCC_2.gif\",\n                \"size\": 9452,\n                \"mimetype\": \"image/gif\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013378\",\n                \"name\": \"ccJ4i_512.png\",\n                \"size\": 22837,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013379\",\n                \"name\": \"2P61f_log.png\",\n                \"size\": 38465,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/rooms",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Follows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/follows",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"follows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/users/me",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Current User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickname\": \"lecacedejean\",\r\n    \"username\": \"le caca de Jean\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/users/me",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Informations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/informations",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"informations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/logout",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:nickname",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":nickname"
+							],
+							"variable": [
+								{
+									"key": "nickname",
+									"value": "alex_off"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:nickname/posts",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":nickname",
+								"posts"
+							],
+							"variable": [
+								{
+									"key": "nickname",
+									"value": "alex_off"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:target_id/comments",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":target_id",
+								"comments"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "227139578069385220"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Follows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:nickname/follows",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":nickname",
+								"follows"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "nickname",
+									"value": "alex_off"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Followers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:nickname/followers",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":nickname",
+								"followers"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "nickname",
+									"value": "alex_off"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follows",
+			"item": [
+				{
+					"name": "Delete Follow",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:target_id/follows",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":target_id",
+								"follows"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "266617661859954688"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Follow",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:target_id/follows",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":target_id",
+								"follows"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "266617661859954688"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "trendertokenapi",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "MTY0MjcxMTg2OTk0NA.fMFwrnCrZvMeXwk3SSLR.WabM2R",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"follow_id\": \"272105765366530186\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/follows/accept",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"follows",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Pin",
+					"item": [
+						{
+							"name": "Get Pin post",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:target_id/pin",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":target_id",
+										"pin"
+									],
+									"variable": [
+										{
+											"key": "target_id",
+											"value": "313935486571905034"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pin post",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:target_id/pin",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":target_id",
+										"pin"
+									],
+									"variable": [
+										{
+											"key": "target_id",
+											"value": "227821918231855104"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UnPin post",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:target_id/pin",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":target_id",
+										"pin"
+									],
+									"variable": [
+										{
+											"key": "target_id",
+											"value": "227821918231855104"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Likes",
+					"item": [
+						{
+							"name": "Likes list",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:post_id/likes",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":post_id",
+										"likes"
+									],
+									"variable": [
+										{
+											"key": "post_id",
+											"value": "227142145872625669"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Like",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:post_id/likes",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":post_id",
+										"likes"
+									],
+									"variable": [
+										{
+											"key": "post_id",
+											"value": "227142145872625669"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Like",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:post_id/likes",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":post_id",
+										"likes"
+									],
+									"variable": [
+										{
+											"key": "post_id",
+											"value": "227142145872625669"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Comments",
+					"item": [
+						{
+							"name": "Create a comment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Oh la gueule du post\",\r\n    \"attached_post_id\": \"298143559670957750\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/posts",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Comments",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/:target_id/comments",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										":target_id",
+										"comments"
+									],
+									"variable": [
+										{
+											"key": "target_id",
+											"value": "298143559670957750"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Home Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/posts",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Informations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/posts/:target_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"posts",
+								":target_id"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "355735249839325184"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"fesses de <@352828274629543095>\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/posts",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"request_id\": \"285815834138509312\",\r\n    \"description\": \"1er post avec images\",\r\n    \"type\": \"image\",\r\n    \"attachments\": [\r\n            {\r\n                \"id\": \"281122855813513220\",\r\n                \"name\": \"biden.png\",\r\n                \"size\": 146165,\r\n                \"created_at\": \"2022-02-14T18:01:51.836Z\"\r\n            },\r\n            {\r\n                \"id\": \"281122855813513221\",\r\n                \"name\": \"george_bush.png\",\r\n                \"size\": 419387,\r\n                \"created_at\": \"2022-02-14T18:01:51.836Z\"\r\n            }\r\n        ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/posts",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "900"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "899"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "898"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "467"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d3-Vsa4XH/fGvvpch8i5vWmxp5dO70\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Feb 2022 16:53:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"post_id\": \"285815834138509312\",\n        \"user_id\": \"227796574762303490\",\n        \"description\": \"1er post avec images\",\n        \"attachments\": [\n            {\n                \"id\": \"281122855813513220\",\n                \"name\": \"biden.png\",\n                \"size\": 146165,\n                \"created_at\": \"2022-02-14T18:01:51.836Z\"\n            },\n            {\n                \"id\": \"281122855813513221\",\n                \"name\": \"george_bush.png\",\n                \"size\": 419387,\n                \"created_at\": \"2022-02-14T18:01:51.836Z\"\n            }\n        ],\n        \"type\": \"image\",\n        \"poll\": {\n            \"options\": []\n        },\n        \"deleted\": false,\n        \"_id\": \"621bac9227c4234028ca991e\",\n        \"created_at\": \"2022-02-27T16:53:38.022Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Upload files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "posts",
+									"type": "file",
+									"src": "/D:/Images/Pixels/4gd9ws_8a27cabe5b26317b992b0fd3d8250f3b47b9d0c4.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/upload?type=posts",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"upload"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "posts"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "posts",
+											"type": "file",
+											"src": [
+												"/D:/Files/Images/logo/2.gif",
+												"/D:/Files/Images/logo/512.png",
+												"/D:/Files/Images/logo/log.png"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/upload?type=posts",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"upload"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "posts"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "900"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "899"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "898"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "447"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1bf-i7I4LG+Iwpu+HNWuDYsryGswBvQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 12 Mar 2022 15:17:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"request_id\": \"290503551044681728\",\n        \"type\": 1,\n        \"attachments\": [\n            {\n                \"id\": \"290503551090819073\",\n                \"name\": \"o4KCC_2.gif\",\n                \"size\": 9452,\n                \"mimetype\": \"image/gif\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013378\",\n                \"name\": \"ccJ4i_512.png\",\n                \"size\": 22837,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            },\n            {\n                \"id\": \"290503551095013379\",\n                \"name\": \"2P61f_log.png\",\n                \"size\": 38465,\n                \"mimetype\": \"image/png\",\n                \"created_at\": \"2022-03-12T15:17:23.876Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/posts/:target_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"posts",
+								":target_id"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "227821918231855104"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channels",
+			"item": [
+				{
+					"name": "Get Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/messages/:channel_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"messages",
+								":channel_id"
+							],
+							"variable": [
+								{
+									"key": "channel_id",
+									"value": "359659080563949568"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"35\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/messages/:channel_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"messages",
+								":channel_id"
+							],
+							"variable": [
+								{
+									"key": "channel_id",
+									"value": "359659080563949568"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Message",
+					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Direct Messages",
+			"item": [
+				{
+					"name": "Open DM",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"users\": [\r\n        \"352827991862149121\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/direct_messages/open",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"direct_messages",
+								"open"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/direct_messages/:guild_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"direct_messages",
+								":guild_id"
+							],
+							"variable": [
+								{
+									"key": "guild_id",
+									"value": "359659080563949568"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get unreads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/messages/unreads",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"messages",
+								"unreads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Leave",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/direct_messages/:guild_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"direct_messages",
+								":guild_id"
+							],
+							"variable": [
+								{
+									"key": "guild_id",
+									"value": "354922935720476672"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Guilds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/direct_messages",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"direct_messages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Posts",
+					"item": [
+						{
+							"name": "All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/search/all?query=a&skip=0&limit=10",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										"search",
+										"all"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "a"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "type",
+											"value": "all",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Videos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/search/all?query=a&skip=0&limit=10&type=videos",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										"search",
+										"all"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "a"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "type",
+											"value": "videos"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Images",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{apibaseurl}}/posts/search/all?query=a&skip=0&limit=10&type=images",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"posts",
+										"search",
+										"all"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "a"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "type",
+											"value": "images"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/search/all?query=a&skip=0&limit=10",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"search",
+								"all"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "a"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Maximum of 100 once"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seo",
+			"item": [
+				{
+					"name": "User Informations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/seo/users/:nickname",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"seo",
+								"users",
+								":nickname"
+							],
+							"variable": [
+								{
+									"key": "nickname",
+									"value": "alex_off"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Informations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/seo/posts/:post_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"seo",
+								"posts",
+								":post_id"
+							],
+							"variable": [
+								{
+									"key": "post_id",
+									"value": "230407437499367443"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Verifications",
+			"item": [
+				{
+					"name": "Recovery",
+					"item": [
+						{
+							"name": "Password",
+							"item": [
+								{
+									"name": "Create link",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{apibaseurl}}/users/me/recovery?type=password&query=camille@boteric.fr",
+											"host": [
+												"{{apibaseurl}}"
+											],
+											"path": [
+												"users",
+												"me",
+												"recovery"
+											],
+											"query": [
+												{
+													"key": "type",
+													"value": "password"
+												},
+												{
+													"key": "query",
+													"value": "camille@boteric.fr"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/verify/email?code=MjY1ODU0NjkxMDkzNjQzMjY2K0czM0p0clgzcGxaSUo5dDluUHNp",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"verify",
+								"email"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "MjY1ODU0NjkxMDkzNjQzMjY2K0czM0p0clgzcGxaSUo5dDluUHNp"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/verify/email?user_id=227796574762303490",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"verify",
+								"email"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "227796574762303490"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Create report",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"reason\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{apibaseurl}}/users/:target_id/report",
+									"host": [
+										"{{apibaseurl}}"
+									],
+									"path": [
+										"users",
+										":target_id",
+										"report"
+									],
+									"variable": [
+										{
+											"key": "target_id",
+											"value": "272105765274255478"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Block",
+			"item": [
+				{
+					"name": "Block list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/me/block",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:target_id/block",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":target_id",
+								"block"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "272105765274255478"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/users/:target_id/block",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"users",
+								":target_id",
+								"block"
+							],
+							"variable": [
+								{
+									"key": "target_id",
+									"value": "272105765274255478"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ethereum",
+			"item": [
+				{
+					"name": "Assets list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{opensea-api}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.opensea.io/api/v1/assets?owner=0x9182C61e928a7fDB80860Bb5A9FD3A333cC1fE3d&order_direction=desc&offset=0&limit=30",
+							"protocol": "https",
+							"host": [
+								"api",
+								"opensea",
+								"io"
+							],
+							"path": [
+								"api",
+								"v1",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "owner",
+									"value": "0x9182C61e928a7fDB80860Bb5A9FD3A333cC1fE3d"
+								},
+								{
+									"key": "order_direction",
+									"value": "desc"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/stats/users",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"stats",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "DeleteOne",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"MTY0MjcxMTg2OTkyMg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/sessions/:session_id",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"sessions",
+								":session_id"
+							],
+							"variable": [
+								{
+									"key": "session_id",
+									"value": "357855309403914250"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"MTY0MjcxMTg2OTkyMg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apibaseurl}}/sessions",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apibaseurl}}/sessions",
+							"host": [
+								"{{apibaseurl}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{oauth-token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "trendertokenapi",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
