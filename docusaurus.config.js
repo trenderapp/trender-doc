@@ -58,9 +58,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'references',
+            docId: 'docs',
             position: 'left',
-            label: 'References',
+            label: 'Docs',
           },
           {
             href: 'https://github.com/trenderapp/',
