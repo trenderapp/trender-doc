@@ -8,10 +8,6 @@ description: All you need to know about file system
 ```
 https://cdn.trenderapp.com/
 ```
-Or sometimes :
-```
-https://cdn2.trenderapp.com/
-```
 
 | TYPE                 | PATH                                         | SUPPORT                                             |
 | -------------------- | -------------------------------------------- | --------------------------------------------------- |
