@@ -24,6 +24,7 @@ const sidebars = {
       label: 'References',
       items: [
         'references/accounts',
+        'references/trends',
         'references/files',
         'references/translate'
       ],
