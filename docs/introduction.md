@@ -18,6 +18,18 @@ sidebar_position: 0
 | Stable Version | [https://api.trenderapp.com](https://api.trenderapp.com)      |
 | Beta Version   | [https://api.beta.trenderapp.com](https://api.trenderapp.com) |
 
+## Stable versions
+
+- You have two different ways to work with the REST API :
+    
+
+| Version | Status | URL     |
+| ------- | ------ | ------- |
+| 4       | Online | /v4     |
+| 3       | Down   | /v3     |
+| 2       | Down   | /api/v2 |
+| 1       | Down   | /api/v1 |
+
 ## Websocket URL
 
 | Version        | URL                           |
